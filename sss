@@ -1,0 +1,53 @@
+#include<iostream>
+#include <cmath>
+#include<string>
+using namespace std;
+
+class SecretCodeGenerator {
+public:
+    static int factorial(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+
+    static bool isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static int nthPrime(int n) {
+        int count = 0;
+        int i = 2;
+        while (count < n) {
+            if (isPrime(i)) {
+                count++;
+            }
+            i++;
+        }
+        return i - 1;
+    }
+
+    static string generateSecretCode(int n) {
+        int firstChar = factorial(n);
+        int lastDigit = nthPrime(n);
+        string secretCode = to_string(firstChar) + to_string(lastDigit);
+        return secretCode;
+    }
+};
+
+int main() {
+    int n;
+    cin>>n;
+    string secretCode = SecretCodeGenerator::generateSecretCode(n);
+    cout << secretCode << endl;
+    return 0;
+}
